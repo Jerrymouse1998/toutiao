@@ -49,7 +49,7 @@ public class InitDatabaseTests {
             news.setLikeCount(i+1);
             news.setUserId(i+1);
             news.setTitle(String.format("TITLE{%d}", i));
-            news.setLink(String.format("http://www.nowcoder.com/%d.html", i));
+            news.setLink("http://www.m1ng.top/");
             newsDAO.addNews(news);
 
             // 给每个资讯插入3个评论

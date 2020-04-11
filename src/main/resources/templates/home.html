@@ -78,18 +78,11 @@
                     #end
                         <div class="post">
                             <div class="votebar">
-                                #if ($vo.like > 0)
-                                <button class="click-like up pressed" data-id="$!{vo.news.id}" title="赞同"><i class="vote-arrow"></i><span class="count">$!{vo.news.likeCount}</span></button>
-                                #else
-                                <button class="click-like up" data-id="$!{vo.news.id}" title="赞同"><i class="vote-arrow"></i><span class="count">$!{vo.news.likeCount}</span></button>
-                                #end
-                                #if($vo.like < 0)
-                                <button class="click-dislike down pressed" data-id="$!{vo.news.id}" title="反对"><i class="vote-arrow"></i></button>
-                                #else
-                                <button class="click-dislike down" data-id="$!{vo.news.id}" title="反对"><i class="vote-arrow"></i></button>
-                                #end
+                                <button class="click-like up" aria-pressed="false" title="赞同"><i class="vote-arrow"></i><span class="count">$!{vo.news.likeCount}</span></button>
+                                <button class="click-dislike down" aria-pressed="true" title="反对"><i class="vote-arrow"></i>
+                                </button>
                             </div>
-                            <div class="content">
+                            <div class="content" data-url="/news/$!{news.id}">
                                 <div >
                                     <img class="content-img" src="$!{vo.news.image}" alt="">
                                 </div>
@@ -146,9 +139,8 @@
 
 #if ($pop)
 <script>
-window.loginpop = $;!{pop};
+window.loginpop = $!{pop};
 </script>
-<script type="text/javascript" src="/scripts/main/site/home.js"></script>
 #end
 
 #parse("footer.html")

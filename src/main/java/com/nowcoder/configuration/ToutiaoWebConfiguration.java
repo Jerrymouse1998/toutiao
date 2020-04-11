@@ -21,7 +21,7 @@ public class ToutiaoWebConfiguration extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有请求，检查是否有合法的ticket，如有，查出user信息放入HostHolder
         registry.addInterceptor(passportInterceptor);
-        //拦截形如"/msg/*"路径的请求，检查HostHolder是否有user信息
+        //拦截形如"/msg/*"路径的请求，消息中心的操作都需要登录，检查HostHolder是否有user信息
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/msg/*");
         super.addInterceptors(registry);
     }

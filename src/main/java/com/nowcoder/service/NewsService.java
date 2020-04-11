@@ -20,19 +20,23 @@ public class NewsService {
     @Autowired
     private NewsDAO newsDAO;
 
+    //分页查询，有userId根据id查，没有则查所有
     public List<News> getLatestNews(int userId, int offset, int limit) {
         return newsDAO.selectByUserIdAndOffset(userId, offset, limit);
     }
 
+    //添加一条资讯
     public int addNews(News news) {
         newsDAO.addNews(news);
         return news.getId();
     }
 
+    //根据资讯id找资讯
     public News getById(int newsId) {
         return newsDAO.getById(newsId);
     }
 
+    //文件上传到服务器本地
     public String saveImage(MultipartFile file) throws IOException {
         //拿到.的索引
         int dotPos = file.getOriginalFilename().lastIndexOf(".");
@@ -54,6 +58,7 @@ public class NewsService {
         return ToutiaoUtil.TOUTIAO_DOMAIN + "image?name=" + fileName;
     }
 
+    //更新评论数
     public int updateCommentCount(int id, int count) {
         return newsDAO.updateCommentCount(id, count);
     }

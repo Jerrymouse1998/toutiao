@@ -41,12 +41,16 @@ public class NewsController {
     @Autowired
     UserService userService;
 
+    //资讯详情
     @RequestMapping(path = {"/news/{newsId}"}, method = {RequestMethod.GET})
     public String newsDetail(@PathVariable("newsId") int newsId, Model model) {
         try {
+            //根据id拿到资讯
             News news = newsService.getById(newsId);
             if (news != null) {
+                //根据资讯id拿到资讯下的所有评论
                 List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
+                //将评论封装到到DTO中
                 List<ViewObject> commentVOs = new ArrayList<ViewObject>();
                 for (Comment comment : comments) {
                     ViewObject commentVO = new ViewObject();
@@ -56,6 +60,7 @@ public class NewsController {
                 }
                 model.addAttribute("comments", commentVOs);
             }
+            //资讯信息也放入model
             model.addAttribute("news", news);
             model.addAttribute("owner", userService.getUser(news.getUserId()));
         } catch (Exception e) {
@@ -130,6 +135,7 @@ public class NewsController {
                              @RequestParam("content") String content) {
         try {
             Comment comment = new Comment();
+            //获得登录后用户的Id，如果没登录这里会是空指针异常
             comment.setUserId(hostHolder.getUser().getId());
             comment.setContent(content);
             comment.setEntityType(EntityType.ENTITY_NEWS);
@@ -137,11 +143,9 @@ public class NewsController {
             comment.setCreatedDate(new Date());
             comment.setStatus(0);
             commentService.addComment(comment);
-
-            // 更新评论数量，以后用异步实现
+            // 更新评论数量，以后用异步实现,异步化//TODO
             int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
             newsService.updateCommentCount(comment.getEntityId(), count);
-
         } catch (Exception e) {
             logger.error("提交评论错误" + e.getMessage());
         }
