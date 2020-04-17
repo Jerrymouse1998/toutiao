@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.service.UserService;
 import com.nowcoder.util.ToutiaoUtil;
 import org.slf4j.Logger;
@@ -20,6 +23,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     //注册
     @RequestMapping(path = {"/reg/"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -64,7 +70,13 @@ public class LoginController {
                     cookie.setMaxAge(3600*24*5);
                 }
                 response.addCookie(cookie);
-                return ToutiaoUtil.getJSONString(0, "注册成功");
+                //放入异步队列
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                        .setActorId((Integer) map.get("userId"))
+                        .setExt("username", (String) map.get("username"))
+                        .setExt("headUrl", (String) map.get("headUrl"))
+                        .setExt("email","xxxxxxx@qq.com"));
+                return ToutiaoUtil.getJSONString(0, "登陆成功");
             } else {
                 return ToutiaoUtil.getJSONString(1, map);
             }

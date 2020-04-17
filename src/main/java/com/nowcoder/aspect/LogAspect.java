@@ -23,8 +23,8 @@ public class LogAspect {
         logger.info("before method: " + sb.toString());
     }
 
-    @After("execution(* com.nowcoder.controller.IndexController.*(..))")
+    @After("execution(* com.nowcoder.controller.*Controller.*(..))")
     public void afterMethod(JoinPoint joinPoint) {
-        logger.info("after method: ");
+        logger.info("after method: "+joinPoint.getTarget());
     }
 }

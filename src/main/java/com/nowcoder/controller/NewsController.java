@@ -1,10 +1,7 @@
 package com.nowcoder.controller;
 
 import com.nowcoder.model.*;
-import com.nowcoder.service.CommentService;
-import com.nowcoder.service.NewsService;
-import com.nowcoder.service.QiniuService;
-import com.nowcoder.service.UserService;
+import com.nowcoder.service.*;
 import com.nowcoder.util.ToutiaoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +27,9 @@ public class NewsController {
     NewsService newsService;
 
     @Autowired
+    LikeService likeService;
+
+    @Autowired
     QiniuService qiniuService;
 
     @Autowired
@@ -48,6 +48,13 @@ public class NewsController {
             //根据id拿到资讯
             News news = newsService.getById(newsId);
             if (news != null) {
+                //当前登录用户对news的赞踩状态
+                int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
+                if (localUserId != 0) {
+                    model.addAttribute("like", likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS, news.getId()));
+                } else {
+                    model.addAttribute("like", 0);
+                }
                 //根据资讯id拿到资讯下的所有评论
                 List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
                 //将评论封装到到DTO中
