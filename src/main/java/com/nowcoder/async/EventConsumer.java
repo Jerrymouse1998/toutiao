@@ -56,7 +56,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 String key = RedisKeyUtil.getEventQueueKey();
                 //从队列中拿到事件列表，0表示当队列为空一直保持阻塞
                 List<String> messages = jedisAdapter.brpop(0, key);
-                //遍历取出的时间列表
+                //遍历取出的事件列表
                 for (String message : messages) {
                     // 第一个元素是队列名字，跳过
                     if (message.equals(key)) {

@@ -3,11 +3,6 @@
 <pre>
 Hello VM.
 
-## 你看不到我
-
-#*
-这里都看不到
-*#
 
 value1:$!{value1}
 $!{value2}

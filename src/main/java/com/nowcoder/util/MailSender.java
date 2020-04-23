@@ -58,7 +58,7 @@ public class MailSender implements InitializingBean {
         mailSender.setUsername("577373789@qq.com");
         mailSender.setPassword("xxxxxx");
         //配置邮箱客户端
-        mailSender.setHost("smtp..qq.com");
+        mailSender.setHost("smtp.qq.com");
         mailSender.setPort(465);
         mailSender.setProtocol("smtps");
         mailSender.setDefaultEncoding("utf8");

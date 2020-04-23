@@ -35,6 +35,8 @@ public class LikeHandler implements EventHandler {
                 + String.valueOf(model.getEntityId()));
         message.setFromId(user.getId());
         message.setCreatedDate(new Date());
+        message.setConversationId(user.getId() < model.getEntityOwnerId() ? String.format("%d_%d", user.getId(), model.getEntityOwnerId()) :
+                String.format("%d_%d", model.getEntityOwnerId(), user.getId()));
         messageService.addMessage(message);
     }
 

@@ -32,7 +32,7 @@ public class LoginExceptionHandler implements EventHandler{
         message.setCreatedDate(new Date());
         messageService.addMessage(message);
         //发送邮件
-        Map<String, Object> map = new HashMap();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("username", model.getExt("username"));
         mailSender.sendWithHTMLTemplate(model.getExt("email"), "toutiao项目登陆异常",
                 "mails/welcome.html", map);

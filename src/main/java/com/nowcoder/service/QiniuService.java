@@ -19,8 +19,8 @@ import java.util.UUID;
 public class QiniuService {
     private static final Logger logger = LoggerFactory.getLogger(QiniuService.class);
     //设置好账号的ACCESS_KEY和SECRET_KEY
-    String ACCESS_KEY = "abNXnXBIlI6viRaOeRY6Hk-zc3V-NpjLcGfYz5kD";
-    String SECRET_KEY = "QP7Xja3FmP1Zyl-oxwQDCb7T6wCoEFKoO-0vht_5";
+    String ACCESS_KEY = "xxx";
+    String SECRET_KEY = "xxx";
     //要上传的空间
     String bucketName = "toutiao";
 
